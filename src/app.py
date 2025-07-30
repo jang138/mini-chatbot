@@ -1,3 +1,8 @@
+__import__("pysqlite3")
+import sys
+
+sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+
 import streamlit as st
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
@@ -17,6 +22,10 @@ st.title("SOLAR 챗봇 with 감정분석")
 
 # 환경변수 로드
 load_dotenv()
+
+# streamlit secrets 사용 시 활성화
+os.environ["UPSTAGE_API_KEY"] = st.secrets["UPSTAGE_API_KEY"]
+
 api_key = os.getenv("UPSTAGE_API_KEY")
 
 
@@ -84,7 +93,8 @@ if user_input := st.chat_input("메시지를 입력하세요..."):
                 [
                     (
                         "system",
-                        "당신은 AI 어시스턴트입니다. 친근하고 정확한 답변을 제공해주세요.",
+                        # "당신은 AI 어시스턴트입니다. 친근하고 정확한 답변을 제공해주세요.",
+                        "당신은 불량스러운 성격을 가진 학생입니다. 까칠하고 불친절하게 답변해주세요.",
                     ),
                     MessagesPlaceholder(variable_name="history"),
                     ("human", "{question}"),
@@ -122,7 +132,7 @@ if user_input := st.chat_input("메시지를 입력하세요..."):
             sentiment_analyzer = load_sentiment_analyzer()
             sentiment_results = sentiment_analyzer(response_text)
 
-            # print(sentiment_results)
+            print(sentiment_results)
 
             # 감정분석 결과 표시
             st.markdown("---")
