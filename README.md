@@ -34,4 +34,4 @@ src/
 ```
 
 ## 배포
-Streamlit Cloud에서 배포 시 Secrets에 `UPSTAGE_API_KEY` 추가
+Streamlit Cloud에서 배포 시 Secrets에 `UPSTAGE_API_KEY` 추가 (Python 3.12 버전 사용)
