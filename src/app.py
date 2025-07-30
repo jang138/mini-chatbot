@@ -23,10 +23,12 @@ st.title("SOLAR 챗봇 with 감정분석")
 # 환경변수 로드
 load_dotenv()
 
-# streamlit secrets 사용 시 활성화
-os.environ["UPSTAGE_API_KEY"] = st.secrets["UPSTAGE_API_KEY"]
-
-api_key = os.getenv("UPSTAGE_API_KEY")
+try:
+    # 배포 환경: Streamlit Cloud secrets 사용
+    api_key = st.secrets["UPSTAGE_API_KEY"]
+except:
+    # 로컬 환경: .env 파일 사용
+    api_key = os.getenv("UPSTAGE_API_KEY")
 
 
 # 파이프라인 초기화
