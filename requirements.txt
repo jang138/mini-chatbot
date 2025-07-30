@@ -5,3 +5,5 @@ langchain_upstage
 langchain_chroma
 langchain_community
 redis
+torch
+transformers
